@@ -41,6 +41,26 @@ buildBundle: buildCore
 	cat build/webaudio.js	>> build/webaudio-bundle.js
 	cat src/plugins/*.js	>> build/webaudio-bundle.js
 
+
+buildCoreAmd:
+	echo "define( function(){ "            > build/webaudio-amd.js
+	cat src/webaudio.core.js		          >> build/webaudio-amd.js
+	cat src/webaudio.nodechainbuilder.js	>> build/webaudio-amd.js
+	cat src/webaudio.sound.js		          >> build/webaudio-amd.js
+	cat src/webaudio.loader.js		        >> build/webaudio-amd.js
+	echo "return WebAudio;"		            >> build/webaudio-amd.js
+	echo "});"		                        >> build/webaudio-amd.js
+
+buildBundleAmd: buildCore
+	echo "define( function(){ "      > build/webaudio-bundle-amd.js
+	cat build/webaudio.js	          >> build/webaudio-bundle-amd.js
+	cat src/plugins/*.js	          >> build/webaudio-bundle-amd.js
+	echo "return WebAudio;"		      >> build/webaudio-bundle-amd.js
+	echo "});"		                  >> build/webaudio-bundle-amd.js
+
+
+
+
 minifyCore:
 	curl --data-urlencode "js_code@build/webaudio.js" 	\
 		-d "output_format=text&output_info=compiled_code&compilation_level=SIMPLE_OPTIMIZATIONS" \
